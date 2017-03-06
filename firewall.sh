@@ -14,16 +14,16 @@ iptables -P FORWARD ACCEPT
 iptables -A INPUT -i lo -j ACCEPT
 
 #添加ssh、http、https、ping允许规则
-iptables -A INPUT -p tcp --dport 22 -j ACCEPT
+#指定IP访问ssh权限，其他IP一律禁止访问
+iptables -A INPUT -p tcp --dport 22 -s 63.19.189.76 -j ACCEPT
+iptables -A INPUT -p tcp --dport 22 -s 24.3.19.58 -j ACCEPT
+#所有IP均可访问http、https、ping规则
 iptables -A INPUT -p tcp --dport 80 -j ACCEPT
 iptables -A INPUT -p tcp --dport 443 -j ACCEPT
 iptables -A INPUT -p icmp -j ACCEPT
 
-#
-iptables -A INPUT -s 172.24.17.136 -j ACCEPT
-iptables -A INPUT -s 172.24.17.137 -j ACCEPT
-iptables -A INPUT -s 172.24.17.139 -j ACCEPT
-iptables -A INPUT -s 172.24.17.140 -j ACCEPT
-iptables -A INPUT -s 172.16.23.234 -j ACCEPT
+#指定IP不做任何限制，可访问所有端口
+iptables -A INPUT -s 10.0.2.0/24 -j ACCEPT
+
 #保存
 #iptables-save
