@@ -18,6 +18,7 @@ iptables -A INPUT -i lo -j ACCEPT
 iptables -A INPUT -p tcp --dport 22 -s 63.19.189.76 -j ACCEPT
 iptables -A INPUT -p tcp --dport 22 -s 24.3.19.58 -j ACCEPT
 #所有IP均可访问http、https、ping规则
+iptables -A INPUT -p udp --sport 53 -j ACCEPT
 iptables -A INPUT -p tcp --dport 80 -j ACCEPT
 iptables -A INPUT -p tcp --dport 443 -j ACCEPT
 iptables -A INPUT -p icmp -j ACCEPT
