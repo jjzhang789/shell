@@ -6,9 +6,11 @@ SECURE="/var/log/secure"
 SECURE_TEMPFILE="/tmp/secure_tempfile"
 ALLOW_IP="36.7.145.24"
 
-tail -300 $SECURE | grep "Failed password for" > $SECURE_TEMPFILE
+tail -600 $SECURE | grep "Failed password for" | grep -v "invalid user" |awk '{print $11}' > $SECURE_TEMPFILE
+tail -600 $SECURE | grep "Failed password for invalid user " | awk '{print $13}' >> $SECURE_TEMPFILE
 
-LIST=`cat $SECURE_TEMPFILE | awk '{print $11}' | sort | uniq | sed "s/$ALLOW_IP//g"`
+
+LIST=`cat $SECURE_TEMPFILE | sort | uniq | sed "s/$ALLOW_IP//g"`
 
 for IP in $LIST
 do
